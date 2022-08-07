@@ -15,6 +15,7 @@
             "stopOnEntry": true,
             //"program": "${workspaceFolder}\\bin/www",
             "protocol":"inspector",
+            // "restart": true,
             "runtimeExecutable": "npm",
             "runtimeArgs": ["run-script", "debug"],
             "port": 9229 // default 9229
