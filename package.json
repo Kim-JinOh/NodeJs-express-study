@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "debug": "set DEBUG=test:www & nodemon ./bin/www"
+    "debug": "set DEBUG=test:www & nodemon ./bin/www",
+    "server": "node ./server.js"
   },
   "dependencies": {
     "bootstrap": "^5.2.0",
