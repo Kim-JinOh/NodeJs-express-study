@@ -26,6 +26,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(function(req, res, next) {
+  const openPath = req.path.split("/")[1];
+  const pageModel = {
+    pageOption: {
+      title: "JinOh-Express",
+      menu: true,
+      navbar: true,
+    },
+    menuOption: {
+      activeUrl: req.originalUrl,
+      openPath: openPath,
+    },
+  };
+
+  res.pageModel = pageModel;
+
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/sneat', sneatRouter);
