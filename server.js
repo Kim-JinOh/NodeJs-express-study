@@ -18,8 +18,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const config = require("./config");
+const http = require("http");
+const https = require("https");
 
 const models = join(__dirname, "app/models");
+const keys = join(__dirname, "keys");
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -43,14 +46,25 @@ connect();
 
 function listen() {
   if (app.get("env") === "test") return;
-  app.listen(port);
+  console.log(keys);
+  // app.listen(port);
+  http.createServer(app).listen(port);
+  https
+    .createServer(
+      {
+        key: fs.readFileSync(keys + "/install-key.pem", "utf-8"),
+        cert: fs.readFileSync(keys + "/install.pem", "utf-8"),
+      },
+      app
+    )
+    .listen(3001);
   console.log("Express app started on port " + port);
 }
 
 function connect() {
   mongoose.connection.on("error", console.log).on("disconnected", connect).once("open", listen);
   return mongoose.connect(config.db, {
-    keepAlive: 1,
+    keepAlive: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
